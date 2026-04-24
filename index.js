@@ -1,10 +1,26 @@
 const Discord = require('discord.js');
 const puppeteer = require('puppeteer');
 const axios = require('axios');
+const express = require('express');
 
-const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS'] });
-const WEBHOOK_URL = 'https://discord.com/api/webhooks/1471318659145404579/3sXs1WPXzfB1mKiD_gCeu7L9VeFCqtadzkUcGR6pagFjPfqnVr-wYgO7p-rFBqlb2LMU';
-const activeUsers = new Set();
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("BakerBOT is running");
+});
+
+app.listen(process.env.PORT || 3000);
+
+const { Client, GatewayIntentBits } = require('discord.js');
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent
+  ]
+});
 
 async function fetchRobloxData() {
   const browser = await puppeteer.launch();
